@@ -5,6 +5,14 @@
  *  2 = month [1-12]
  *  3 = year 
  * *)
+
+val dates =
+  [(2,10,1993),(1,11,2019),(31,10,1960),(13,12,1965),(2,4,1993),(9,10,2000),(3,12,1992)]
+
+val months = [12,4,3,2]
+
+val x = [("hello"),("world"),("im"),("eduardo")];
+
 (* 1 *)
 (* true if date1 < date2 *)
 fun is_older (xs: (int*int*int) , ys: (int*int*int) ) =
@@ -60,8 +68,22 @@ fun dates_in_month (dates: (int*int*int) list, month:int) =
       else dates_in_month(tl dates, month)
     end
 
+(* 5 *)
+(* return list of dates within the lists of months *)
+fun dates_in_months (dates: (int*int*int) list, months: int list) =
+  if null months then []
+  else 
+    let
+      val cur_month = hd months
+    in
+      dates_in_month(dates, cur_month) @ dates_in_months(dates,tl months)
+    end
 
-
+(* 6 *)
+(* returns nth element of the list where teh head of the list is 1st *)
+fun get_nth (xs: string list, n:int) = 
+  if n = 1 then hd xs
+  else get_nth(tl xs, n-1)
 
 
 
