@@ -6,13 +6,6 @@
  *  3 = year 
  * *)
 
-val dates =
-  [(2,10,1993),(1,11,2019),(31,10,1960),(13,12,1965),(2,4,1993),(9,10,2000),(3,12,1992)]
-
-val months = [12,4,3,2]
-
-val x = [("hello"),("world"),("im"),("eduardo")];
-
 (* 1 *)
 (* true if date1 < date2 *)
 fun is_older (xs: (int*int*int) , ys: (int*int*int) ) =
