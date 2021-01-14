@@ -54,3 +54,12 @@ val test22 = what_month(28) = 1
 val test23 = month_range(33,365) = [2,3,4,5,6,7,8,9,10,11,12]
 val test24 = month_range(33,37) = [2]
 val test25 = month_range(70,304) = [3,4,5,6,7,8,9,10]
+
+(* test question 11 *)
+val test26 = oldest(dates) = SOME(1,2,1880)
+val test27 = oldest([(1,2,2000),(1,1,1999),(1,2,2021),(1,2,1999)]) =
+  SOME(1,1,1999)
+
+(* test question 12 *)
+val test28 = cumulative_sum([12,27,13]) = [12,39,52]
+val test29 = cumulative_sum([1,2,3,4,5,6,7]) = [1,3,6,10,15,21,28]

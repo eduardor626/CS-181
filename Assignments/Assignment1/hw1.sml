@@ -119,18 +119,7 @@ fun what_month(day: int) =
       number_before_reaching_sum(day,months) + 1
     end
 
-(*  
- * day1 = month 1
- * day2 = month2 
- *
- * 1: 
- * 33 = 2
- * 365 = 12
- * 
- *
- *  *)
-
-
+(* 10 *)
 fun month_range(day1: int , day2: int) = 
   if day1 > day2 then []
   else
@@ -143,3 +132,44 @@ fun month_range(day1: int , day2: int) =
     in 
       append(month1,month2)
     end
+
+(* 11 *)
+fun oldest(dates: (int*int*int) list) = 
+  if null dates then NONE
+  else
+    let
+      val cur_date = hd dates
+      fun check_older(xs: (int*int*int) , d : (int*int*int) list) = 
+        if null d then xs
+        else
+          let
+            val date = xs
+            val next_date = hd d
+          in
+            if is_older(date,next_date) then check_older(date, tl d)
+            else
+              check_older(next_date,tl d)
+          end
+    in
+      SOME (check_older(cur_date,dates))
+    end
+
+(* 12 *)
+fun cumulative_sum(xs: int list) = 
+  if null xs then []
+  else
+    let
+      val cur_el = hd xs
+      fun helper(a:int, xs: int list) =
+        if null xs then []
+        else
+          let 
+            val next_el = hd xs
+            val added = a + next_el
+          in
+            added::helper(added, tl xs)
+          end
+    in
+      cur_el::helper(cur_el, tl xs)
+    end
+
