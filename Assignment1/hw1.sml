@@ -79,17 +79,67 @@ fun get_nth (xs: string list, n:int) =
   else get_nth(tl xs, n-1)
 
 
+(* 7 *)
+fun date_to_string(date: (int*int*int) ) = 
+  let
+    val months = ["January","February","March","April", "May", "June", "July",
+                      "August","September","October","November","December"]
+    val cur_month = #2 date
+    val cur_day = Int.toString(#1 date)
+    val cur_year = Int.toString(#3 date)
+    val month = get_nth(months,cur_month)
+  in
+    month ^"-"^cur_day^"-"^cur_year
+  end
+
+(* 8 *)
+(* return the number n of the elements in the list that when adding 
+ * gives you < the sum thats given *)
+fun number_before_reaching_sum(sum: int, xs: int list) = 
+    if sum <= 0 then 0
+    else
+      let
+        val cur_element = hd xs
+        val cur_sum = sum - cur_element
+      in 
+        if cur_sum > 0 then 1 + 
+        number_before_reaching_sum(cur_sum, tl xs) 
+        else 
+          number_before_reaching_sum(cur_sum,tl xs)
+      end
+
+(* 9 *)
+(* return an int of what month the day lands on*)
+fun what_month(day: int) = 
+  if day < 1 orelse day > 365 then 0
+  else
+    let 
+      val months = [31,28,31,30,31,30,31,31,30,31,30,31]
+    in
+      number_before_reaching_sum(day,months) + 1
+    end
+
+(*  
+ * day1 = month 1
+ * day2 = month2 
+ *
+ * 1: 
+ * 33 = 2
+ * 365 = 12
+ * 
+ *
+ *  *)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+fun month_range(day1: int , day2: int) = 
+  if day1 > day2 then []
+  else
+    let
+      val month1 = what_month(day1)
+      val month2 = what_month(day2)
+      fun append(month1: int, month2: int) = 
+        if month1 = month2 then month1::[]
+        else month1::append(month1+1,month2)
+    in 
+      append(month1,month2)
+    end
