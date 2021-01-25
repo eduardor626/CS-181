@@ -119,17 +119,64 @@ fun no_repeats (xs) =
   length(xs) = length(dedup xs)
 
 (* Problem 6 *)
+val nest = Array [Object [],
+                  Object[("a",True),
+                         ("b",Object[("foo",True),
+                                     ("foo",True)]),
+                         ("c",True)],
+                  Object []]
+ 
 fun recursive_no_field_repeats (j) = 
   let 
     fun process_elements(xs) = 
-      case xs of
-           [] => 0
-    
-    fun process_contents(ys) = 
+      case xs of 
+          x::xs' => process_elements(xs') andalso recursive_no_field_repeats(x)
+      | [] => true
+
+    fun check_contents(obj) = 
+      case obj of
+           (k,v)::obj' => no_repeats(one_fields(v)) andalso check_contents(obj')
+         |_ => true
 
   in
-
+   case j of 
+        Array x => process_elements(x)
+      | Object y => check_contents(y)
+      | _ => true
   end
+
+(* Problem 7 *)
+(* "a", "a", "b" *)
+fun count_occurrences(xs,exn) = 
+  let
+    fun helper(xs,acc,str,count) =
+      case xs of 
+           [] => acc
+         | x::xs' => case strcmp(str,x) of
+                          LESS =>  helper(xs',(x,1)::acc, x,1)
+                        | EQUAL => helper(xs',(str,count+1)::acc,str,count+1) 
+                        | GREATER => raise exn
+  in
+    helper(xs,[],hd xs,0)
+  end
+
+(* "a", "a", "b" *)
+fun count_occurrences2(xs,exn) = 
+  let
+    fun helper(xs,acc,str,count) =
+      case xs of 
+           [] => acc
+         | x::[] => helper([],(x::count)::acc,x,1)
+          | _::y::xs' => case strcmp(str,y) of
+                          LESS =>  helper(xs',(y,1)::acc, y,1)
+                        | EQUAL => helper(xs',(str,count+1)::acc,str,count+1) 
+                        | GREATER => raise exn
+  in
+    helper(xs,[],hd xs,1)
+  end
+
+
+
   
 
 
